@@ -11,7 +11,12 @@ public class Main {
         new Thread(buyers, carFactory::sellAuto, "Третий покупатель").start();
         new Thread(buyers, carFactory::sellAuto, "Четвёртый покупатель").start();
 
+
         ThreadGroup makers = new ThreadGroup("group2");
         new Thread(makers, carFactory::createAuto, "Производитель Toyota").start();
+
+        //new Thread(makers, carFactory::createAuto, "Производитель Subaru").start();
+        //new Thread(makers, carFactory::createAuto, "Производитель Nissan").start();
+        //new Thread(makers, carFactory::createAuto, "Производитель BMW").start();
     }
 }
