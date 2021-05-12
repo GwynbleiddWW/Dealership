@@ -12,7 +12,7 @@ public class CarFactory {
     }
 
     public void createAuto() {
-        seller.makeAuto();
+            seller.makeAuto();
     }
 
     public List<Auto> getAuto() {
