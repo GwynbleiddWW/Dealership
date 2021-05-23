@@ -9,26 +9,36 @@ public class Seller {
     }
 
     public synchronized Auto sellAutos() {
-        System.out.println(Thread.currentThread().getName() + " зашел в автосалон");
-        if (carFactory.getAuto().isEmpty()) {
-            System.out.println("Машин нет в наличии");
-            try {
+        try {
+            Thread.sleep(timeout);
+            System.out.println(Thread.currentThread().getName() + " зашел в автосалон");
+            while (carFactory.getAuto().isEmpty()) {
+                Thread.sleep(timeout);
+                System.out.println("Машин нет в наличии");
                 wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         System.out.println(Thread.currentThread().getName() + " уехал на новеньком авто");
         return carFactory.getAuto().remove(0);
     }
 
     public synchronized void makeAuto() {
-        Auto auto = new Auto(" \"Prototype X\" ");
-        int amountOfAuto = 10;
-        if (carFactory.getAuto().size() < amountOfAuto) {
-            carFactory.getAuto().add(auto);
+        try {
+            Auto auto = new Auto(" \"Prototype X\" ");
+            int amountOfAuto = 10;
+            if (carFactory.getAuto().size() < amountOfAuto) {
+                for (int i = 0; i < 10; i++) {
+                    carFactory.getAuto().add(auto);
+                }
+            }
+                Thread.sleep(timeout);
+                System.out.println(Thread.currentThread().getName() + " выпустил 1 авто:" + auto.name);
             notify();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        System.out.println(Thread.currentThread().getName() + " выпустил 1 авто:" + auto.name);
+
     }
 }
